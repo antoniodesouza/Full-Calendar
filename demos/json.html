@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link href="../fullcalendar.css" rel="stylesheet" />
+        <link href="../fullcalendar.print.css" rel="stylesheet" media="print" />
+        <script src="../lib/moment.min.js"></script>
+        <script src="../lib/jquery.min.js"></script>
+        <script src="../fullcalendar.min.js"></script>
+        <script>
+                           $(document).ready(function() {
+            
+                               $('#calendar').fullCalendar({
+                                   monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho','Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                   monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul','Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                   dayNames : ['Domingo', 'Segunda', 'Terça', 'Quarta','Quinta', 'Sexta', 'Sábado'],
+                                   dayNamesShort : ['Dom', 'Seg', 'Ter', 'Qua','Qui', 'Sex', 'Sáb'],
+                                   timeFormat : {
+                                        agenda: 'h:mm', // 5:00 // for agendaWeek and agendaDay
+                                        '': 'h(:mm)t'  // 7p // for all other views
+                                    },
+                                   columnFormat: {
+                                        month: 'ddd',    // Mon
+                                        week: 'ddd M/D', // Mon 9/7
+                                        day: 'dddd'      // Monday
+                                    },
+                                    titleFormat: {
+                                        month: 'MMMM YYYY', // September 2009
+                                        week: "MMM D YYYY", // Sep 13 2009
+                                        day: 'MMMM D YYYY'  // September 8 2009
+                                    },
+                                    buttonText: {
+                                        today:    'Hoje',
+                                        month:    'Mês',
+                                        week:     'Semana',
+                                        day:      'Dia'
+                                    },
+            
+                                   header: {
+                                       left: 'prev,next today',
+                                       center: 'title',
+                                       right: 'month,agendaWeek,agendaDay'
+                                   },
+                                   defaultDate: '2014-09-12',
+                                   editable: true,
+                                   eventLimit: true, // allow "more" link when too many events
+                                   events: {
+                                       url: 'php/get-events.php',
+                                       error: function() {
+                                           $('#script-warning').show();
+                                       }
+                                   },
+                                   loading: function(bool) {
+                                       $('#loading').toggle(bool);
+                                   }
+                               });
+            
+                           });
+        </script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+                font-size: 14px;
+            }
+            #script-warning {
+                display: none;
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                padding: 0 10px;
+                line-height: 40px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 12px;
+                color: red;
+            }
+            #loading {
+                display: none;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+            #calendar {
+                max-width: 900px;
+                margin: 40px auto;
+                padding: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="script-warning">
+            <code>php/get-events.php</code> must be running.
+        </div>
+        <div id="loading">loading...</div>
+        <div id="calendar"></div>
+    </body>
+</html>
